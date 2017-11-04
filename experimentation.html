@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=0.9, user-scalable=yes, minimal-ui">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="robots" content="NOODP">
+	<meta name="description" content="Readsy is an easy way to read large amounts of text in a rapidly comprehensible way using Spritz.">
+
+	<meta property="og:url" content="http://www.readsy.co/" />
+	<meta property="og:title" content="Readsy" />
+	<meta property="og:image" content="http://dwdhruapbuq08.cloudfront.net/static/img/logo500500.png" />
+
+	<link rel="shortcut icon" href="http://dwdhruapbuq08.cloudfront.net/static/img/favicon.ico">
+
+	<title>Readsy</title>
+
+	<script type="text/javascript">
+		var SpritzSettings = {
+			clientId: "afb9145630773e008",
+			redirectUri: "http://" + window.location.host + "/spritz/login_success"
+		};
+	</script>
+
+	<link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+
+		<link rel="stylesheet" type="text/css" href="http://dwdhruapbuq08.cloudfront.net/static/gen/packed.css?e65bac0d" />
+
+
+	<link type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="//sdk.spritzinc.com/js/1.2/js/spritz.min.js"></script>
+	<script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="3kwrstpe4ylxu6z">	</script>
+
+	<script>
+		formString = ""
+		titleText = ""
+		fileName = ""
+	</script>
+
+
+		<script type="text/javascript" src="http://dwdhruapbuq08.cloudfront.net/static/gen/packed.js?0350f7f1"></script>
+
+
+	<style>
+		.spritzer-container {
+		  border: none;
+		  background-color: inherit;
+		  box-shadow: none;
+		}
+
+		iframe {
+			vertical-align: top;
+		}
+	</style>
+
+	<script type="text/javascript">
+		function disableButton() {
+			console.log("test");
+			$("#uploadfilebutton").button('loading');
+			// validateFile();
+		}
+
+		function darken() {
+			$("body").css("background-color", "#616161");
+			$("#bigtitle").css("color", "#DFDFDF");
+			$("#wordCounter").css("color", "#DFDFDF");
+			$(".footer").css("border-top-color", "#8A8A8A");
+			$(".footer").css("color", "#AFAFAF");
+			$("#inputText").css("background-color", "#DDD");
+
+			$("#instructions").css("visibility", "hidden");
+			$("#modalButton").css("visibility", "hidden");
+			$("#URLForm").css("visibility", "hidden");
+			$(".header").css("visibility", "hidden");
+		}
+
+		function lighten() {
+			$("body").css("background-color", "#F0F0F0");
+			$("#bigtitle").css("color", "#000");
+			$("#wordCounter").css("color", "#000");
+			$(".footer").css("border-top-color", "#e5e5e5");
+			$(".footer").css("color", "#777");
+			$("#inputText").css("background-color", "#fff");
+
+			$("#instructions").css("visibility", "initial");
+			$("#modalButton").css("visibility", "initial");
+			$("#URLForm").css("visibility", "initial");
+			$(".header").css("visibility", "initial");
+		}
+
+		$(document).ready(function() {
+			// $('#editor').tooltip();
+			if (formString != "")
+			{
+				$("#startSpritz").focus();
+				$("#inputText").val(jDecode(formString).replace(/\s+/g, ' '));
+				$("#urlentry").val("")
+				$('#bigtitle').attr('href', '/');
+				// console.log(formString)
+				updateEditor(formString);
+				// $('#editorpara').text(jDecode(formString));
+			}
+
+			if ("" != "")
+			{
+				$("#inputText").blur();
+			}
+			else if (titleText != "")
+			{
+				document.title += " - "
+				document.getElementById('editortitle').innerHTML = titleText;
+				$("firstPara").remove();
+			}
+
+			else if (titleText == "") {
+				titleText = "Click and highlight the text in this page to change it!";
+				var startText = "You can literally click in this space and edit the text you're reading. Then go back to the home page and your text will appear in the box, ready to Readsy. Try it! (Start by highlighting and deleting this text)";
+				document.getElementById('editortitle').innerHTML = titleText;
+				document.getElementById('editorpara').innerHTML = startText;
+			}
+
+			// check bytes not too high
+			dropOptions = {
+				// Required. Called when a user selects an item in the Chooser.
+				success: function(files) {
+					// console.log(files[0].link);
+					// alert("Here's the file link: " + files[0].link)
+					if (files[0].bytes > 5 * 1024 * 1024)
+					{
+						alert("Please choose another file");
+					}
+					else {
+						// var a = location.href.replace(/^http%5C:%5C/%5C/(.*)$/,files[0].bytes);
+						location.href="http://www.readsy.co/web?url="+escape(files[0].link);
+						$("#uploadfilebutton").removeAttr("data-loading-text");
+					}
+				},
+
+				cancel: function() {
+					$("#uploadfilebutton").removeAttr("data-loading-text");
+				},
+
+				linkType: "direct",
+
+				multiselect: false,
+
+				extensions: ['.pdf', '.txt']
+			};
+
+			var dropButton = Dropbox.createChooseButton(dropOptions);
+
+			// console.log(dropButton);
+			$(dropButton).insertAfter("#filelimit");
+			$(dropButton).click(disableButton);
+		});
+	</script>
+
+	<script type="text/javascript">
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-50152323-1', 'readsy.co');
+		ga('require', 'displayfeatures');
+		ga('send', 'pageview');
+	</script>
+</head>
+
+<body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=788553447863567&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+	<div class="container" id="content1">
+		<div class="header">
+				<ul class="nav nav-pills pull-right">
+					<li id="list1" class="active"><a id="navbar1" href="#">Home</a></li>
+					<li id="list2" class="inactive"><a id="navbar2" href="#editor">Editor</a></li>
+					<li id="list3" class="inactive"><a id="navbar3" href="#about">About</a></li>
+					<li id="list4" class="inactive"><a id="navbar4" href="#contact">Contact</a></li>
+				</ul>
+				<h3 class="text-muted">&nbsp;</h3>
+		</div>
+
+		<div class="jumbotron" id="jumbotron">
+			<!-- <h1><a id="bigtitle">Readsy</a></h1> -->
+			<a href="/"><img src="http://dwdhruapbuq08.cloudfront.net/static/img/logo.png" class="img-responsive" alt="Readsy" id="logoImg"></a>
+
+			<p class="text-mid" id="instructions">
+				Enter a URL, upload a file or paste some text, and hit <span class="label label-success">Readsy!</span>
+			</p>
+
+			<p>
+				<form action="/web" method="GET" class="form-inline" role="form" id="URLForm">
+					<div class="form-group">
+					  <label class="sr-only" for="urlentry">Enter URL</label>
+					  <input type="text" class="form-control" name="url" id="urlentry" placeholder="Enter URL here"/>
+					</div>
+
+					<input type="submit" class="btn btn-primary btn-sm" value="Submit URL"/>
+				</form>
+			</p>
+
+			<p style="margin-top: 20px;">
+				<div id="spritzer"></div><br>
+			</p>
+
+			<p style="margin-bottom: 20px;">
+				<!-- modal code -->
+				<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="modalButton">
+					Upload PDF/txt
+				</button>
+
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+					<div class="modal-content">
+					  <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="myModalLabel">Upload File to Readsy</h4>
+					  </div>
+					  <div class="modal-body" id="modalbody">
+						<p id="filelimit"><small><strong>5MB limit.</strong><small><small> Only .pdf and .txt please. Files deleted hourly.<br>Might take a few seconds, depending on how big the file is. 100 pages max.</small></small></small></p>
+
+						<p style="padding-top:20px;">Or, upload it yourself:</p>
+						<form action="/upload" method="post" enctype="multipart/form-data">
+							<center><input type="file" name="file" id="files2"/></center>
+							<!-- <button type="submit">Upload</button>						 -->
+					  </div>
+					  <div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button class="btn btn-primary" type="submit" id="uploadfilebutton" data-loading-text="Upload" onclick="disableButton();">Upload</button>
+					  </div>
+						</form>
+					</div>
+				  </div>
+				</div>
+				<!-- modal code finish -->
+
+				<textarea class="form-control" rows="6" id="inputText" placeholder="Enter your own text, or click the Sample button to load the sample text. You may be asked to create an account with Spritz (they power the flashing word box) - it takes about 10 seconds to do!" data-toggle="tooltip" data-placement="right" title="Click on Editor at the top for easier editing!"></textarea><br>
+
+				<div class="btn-group btn-group-lg">
+					<button id="fill" type="submit" class="btn btn-primary">Sample</button>
+					<button id="clear" type="submit" class="btn btn-primary">Clear</button>
+				</div>
+
+				<div class="btn-group btn-group-lg">
+					<button id="startSpritz" type="submit" class="btn btn-success">Readsy!</button>
+				</div>
+
+				<div id="progressbar">
+				<p id="wordCounter"><small>
+					<br>Completed <span id="wordNumber">0</span> words out of <span id="wordTotal">0</span>.<br>
+					<form class="form-inline" role="form" id="seekForm">
+						<div class="form-group">
+							<label class="sr-only" for="seekWord">Word No. </label>
+							<input type="text" class="form-control" id="seekNum" placeholder="Go to Word Number...">
+						</div>
+						<button type="button" class="btn btn-default" id="btnSeek">Go!</button>
+					</form>
+				</small></p>
+				</div>
+
+				<div class="row" style="margin-top: 80px; width: 220px; margin-left: auto; margin-right: auto;">
+				    <div class="col-xs-6">
+				    	<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.readsy.co" style="float: left;">Tweet</a>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+						</script>
+				    </div>
+				    <div class="col-xs-6">
+				    	<div class="fb-share-button" data-href="http://www.readsy.co" data-type="button_count"></div>
+				    </div>
+				</div>
+			<!-- </p> -->
+		</div>
+
+
+		<div style="display:none; padding-bottom:20px;" id="editor" class="jumbotron" data-toggle="tooltip" data-placement="top" data-trigger="click" title="When you go back to the main page, this text will automatically fill into the textbox for you to Readsy!" data-selector="#editortitlediv">
+			<h2 id="editortitle"></h2>
+
+			<p id="editorpara" class="firstPara"></p>
+
+			<!-- <p id="editorpara" style="line-height:150%;">You can literally click in this space and edit the text you're reading. Try it!</p> -->
+			<p id="bottom"></p>
+		</div>
+
+		<div style="display:none" id="aboutme">
+			<div class="jumbotron" id="jumbotron">
+			<h1><a id="bigtitle">About Me</a></h1>
+
+			<div class="alert alert-success">
+			  <p class="text-left"><small>
+			  Bookmarklet is here: <a class="btn btn-info btn-xs" href='javascript:void((function() {var t = "";if(window.getSelection){t = window.getSelection();}else if(document.getSelection){t = document.getSelection();}else if(document.selection){t = document.selection.createRange().text;}if (t == "") {var a=location.href.replace(/^http%5C:%5C/%5C/(.*)$/,"$1");location.href="http://www.readsy.co/web?url="+encodeURIComponent(a);} else {location.href="http://www.readsy.co/text/"+encodeURIComponent(t).replace(/[\/]/g, "%20");}})())' onclick="alert('Drag this button onto your bookmarks bar to add the Readsy bookmarklet. Then click on it from any other webpage!');return false">Readsy</a>. Drag it onto your bookmarks bar and click it from the webpage of a particularly tedious article!
+			  </small></p>
+			</div>
+
+			<p class="text-left">
+				Readsy is a tool to help you skim large amounts of text by focusing your eyes on one word at a time without having to move them. It is powered by Spritz - you can read more about it <a href="http://www.spritzinc.com/the-science/">here</a>. To register for higher speeds, click "Login" on the top right of the Spritz box, and create an account with Spritz.
+			</p></br>
+
+			<p class="text-left"><small>
+				<a href="http://akashjain.co.uk">Akash Jain</a> is a 3rd year undergraduate at Princeton University majoring in Computer Science. The code for the site is hosted on GitHub <a href="https://github.com/a-jain/Readsy">here</a> and the logo was designed by the talented <a href="https://www.linkedin.com/pub/johan-kruijssen/65/4b0/952">Matteo Kruijssen</a>.<br>
+			</small></p>
+
+			<p class="text-left"><small>
+				If Readsy helped you in a meaningful way, please consider donating a little bit to help me with the running costs. Even just a few dollars a day means I can drastically increase the page/size limits for PDFs!
+			</small></p>
+
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+			<input type="hidden" name="cmd" value="_s-xclick">
+			<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+			">
+			<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - Thanks for donating!">
+			<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+			</form>
+
+			</div>
+		</div>
+
+		<div style="display:none" id="contactme">
+			<div class="jumbotron" id="jumbotron">
+			<h1><a id="bigtitle">Get In Touch!</a></h1>
+			<p><small>
+				<a href="http://www.akashjain.co.uk">Here</a> is my website </br>
+
+				Email me <a href="mailto:mr.akashj@gmail.com?subject=Hello">here</a> </br>
+
+				Or, more informally, get in touch <a href="https://www.facebook.com/mr.akashj">here</a>
+			</small></p>
+			</div>
+		</div>
+
+	<!-- close container -->
+	</div>
+
+  <div class="footer" style="margin-top: 100px">
+	<div class="container" id="footercontent" >
+		<center><p>&copy; 2014 <a href="mailto:mr.akashj@gmail.com?subject=Readsy%20Feedback">Akash Jain</a></p></center>
+	</div>
+  </div>
+
+  <!-- <script src="../static/js/froala_editor.min.js"></script> -->
+  <script>
+	  $(function(){
+		  $('#editor').editable({autosave: true, plainPaste: true, paragraphy: false, enableScript: true, inlineMode: true});
+	  });
+  </script>
+
+</body>
+
+</html>

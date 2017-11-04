@@ -2,26 +2,33 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <title>ReadRocket</title>
-  <link rel="stylesheet" href="master.css">
+    <meta charset="utf-8">
+    <title>ReadRocket</title>
+    <link rel="stylesheet" href="master.css">
+    <script src="script.js"></script>
 </head>
 
 <body>
-  <ul id="wpmselect">
-    <li>
-      <div class="wpm_dropdown">
-        <select id="wpm">
-          <option value="200">200</option>
-          <option value="250">250</option>
-          <option value="300">300</option>
-        </select>
-    </li>
-    <li id="caption"> words per minute </li>
-
-  </ul>
-
-  </div>
+    <h1> ReadRocket </h1>
+    <div class="Main reader component">
+        <p id="text recycler"> sample text recycler goes here</p>
+    </div>
+    <ul id="wpmselect">
+        <li>
+            <div class="wpm_dropdown">
+                <select id="wpm">
+                    <option value="200">200</option>
+                    <option value="250">250</option>
+                    <option value="300">300</option>
+                </select>
+        </li>
+        <li id="caption"> words per minute </li>
+    </ul>
+    </div>
+    <div class="play/pause button experimentation">
+        <a href="#" title="Play video" class="play" onclick="beginSpeedRead()"></a>
+        <h1>Play/Pause</h1>
+    </div>
 </body>
 
 </html>
