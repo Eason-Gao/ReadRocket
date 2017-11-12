@@ -116,6 +116,14 @@ h1 {
     margin-bottom: 0;
 }
 
+.Sample {
+    text-transform:lowercase;
+    color: #34495e;
+    letter-spacing: 1px;
+    font-size: 1em;
+    margin-bottom: 0;
+}
+
 .headline {
     display: block;
     color: #2c3e50;
