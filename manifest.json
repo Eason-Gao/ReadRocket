@@ -9,7 +9,7 @@
     {
       "matches": ["http://*/*", "https://*/*"],
       "css": ["master.css"],
-      "js": ["script.js"]
+      "js": ["ThirdParty/jquery-3.2.1.min.js","test-script.js"]
     }
   ],
 
@@ -22,10 +22,6 @@
     "activeTab"
   ],
 
-  "background": {
-    "page":"index.html"
-  },
-
     "author": "Eason Gao",
 
   "commands": {
@@ -36,5 +32,7 @@
       "description": "Begin Read",
       "global": true
     }
-  }
+  },
+
+  "web_accessible_resources": ["index.html"]
 }
