@@ -1,0 +1,40 @@
+{
+  "manifest_version": 2,
+  "name": "ReadRocket",
+  "version": "0.1",
+
+  "description": "A chrome extenion that speeds up all your web consumption!",
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "css": ["master.css"],
+      "js": ["script.js"]
+    }
+  ],
+
+
+  "browser_action": {
+    "default_popup": "index.html"
+  },
+
+  "permissions": [
+    "activeTab"
+  ],
+
+  "background": {
+    "page":"index.html"
+  },
+
+    "author": "Eason Gao",
+
+  "commands": {
+    "Read": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+R"
+      },
+      "description": "Begin Read",
+      "global": true
+    }
+  }
+}
